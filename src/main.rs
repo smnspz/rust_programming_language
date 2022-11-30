@@ -1,5 +1,4 @@
 fn main() {
-    println!("Hello, world!");
     another_function(five());
     expressions()
 }
