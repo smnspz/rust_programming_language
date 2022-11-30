@@ -7,9 +7,18 @@ fn main() {
 
     let _s3: String = takes_and_gives_back(s2);
 
+    let mut s4: String = String::from("Hello");
+
+    // how to pass a mutable variable reference into a function
+    change(&mut s4);
+
+    println!("This string was changed: q{}", s4);
+
     // with the ampersand we pass a reference to the value
     // so that we can still use the variable afterwards
     let _length = calculate_length(&s1);
+
+    let reference_to_nothing = dangle();
 }
 
 // variable s inside function scope() is not valid here
@@ -45,4 +54,19 @@ fn takes_and_gives_back(a_string: String) -> String {
 // borrowing = having references as functions parameters
 fn calculate_length(s: &String) -> usize {
     s.len()
+}
+
+fn change(some_string: &mut String) {
+    some_string.push_str(", world!");
+}
+
+// creates a dangling reference
+fn dangle() -> &String {
+    let s = String::from("Hello"); // new string
+    &s // returns a reference to the string
+} // Here the string goes out of scope, it points to an invalid string
+
+fn no_dangle() -> String {
+    let s = String::from("Hello");
+    s
 }
