@@ -12,13 +12,17 @@ fn main() {
     // how to pass a mutable variable reference into a function
     change(&mut s4);
 
-    println!("This string was changed: q{}", s4);
+    println!("This string was changed: {}", s4);
 
     // with the ampersand we pass a reference to the value
     // so that we can still use the variable afterwards
     let _length = calculate_length(&s1);
 
-    let reference_to_nothing = dangle();
+    // let reference_to_nothing = dangle();
+
+    let word = first_word(&s4);
+
+    string_slice();
 }
 
 // variable s inside function scope() is not valid here
@@ -61,12 +65,31 @@ fn change(some_string: &mut String) {
 }
 
 // creates a dangling reference
-fn dangle() -> &String {
-    let s = String::from("Hello"); // new string
-    &s // returns a reference to the string
-} // Here the string goes out of scope, it points to an invalid string
+// fn dangle() -> &String {
+//     let s = String::from("Hello"); // new string
+//     &s // returns a reference to the string
+// } // Here the string goes out of scope, it points to an invalid string
 
 fn no_dangle() -> String {
     let s = String::from("Hello");
     s
+}
+
+fn first_word(s: &String) -> usize {
+   let bytes = s.as_bytes();
+
+   for (i, &item) in bytes.iter().enumerate() {
+       if item == b' ' {
+           return i;
+       }
+   }
+
+   s.len()
+}
+
+fn string_slice() {
+    let hello_world: String = String::from("Hello World");
+    let hello = &hello_world[0..5];
+    let world = &hello_world[6..11];
+    println!("{} {}", hello, world);
 }
